@@ -1,0 +1,45 @@
+﻿@model CMPSAdvisingDB.Student
+
+@{
+    ViewBag.Title = "ListTakenCourses";
+}
+
+<h2>Courses Taken</h2>
+
+<div>
+
+    <p>Name: @Model.FirstName @Model.LastName</p>
+    <p>W#: @Model.WNumber</p>
+
+</div>
+
+<div>
+    <table class="table table-bordered">
+        <tr>
+            <th>Course</th>
+            <th>Department</th>
+            <th>Number</th>
+            <th>Semester</th>
+            <th>Grade</th>
+        </tr>
+        @foreach (Course c in ViewBag.CoursesTaken as IEnumerable<Course>)
+        {
+            if(c != null)
+            { 
+            <tr>
+                <td>@c.BaseCourse.Name</td>
+                <td>@c.BaseCourse.Department</td>
+                <td>@c.BaseCourse.CourseNumber</td>
+                <td>@c.Semester</td>
+                <td>@c.Grade</td>
+            </tr>
+            }
+        }
+    </table>
+</div>
+
+<p>
+    @Html.ActionLink("Student Details", "Details", new { id = Model.ID }) |
+    @Html.ActionLink("Back to Students List", "Index")
+</p>
+

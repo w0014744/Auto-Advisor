@@ -1,0 +1,518 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="CMPSAdvising1Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="ContextKey" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="Model" Type="varbinary(max)" Nullable="false" />
+          <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BaseCourse">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="Department" Type="nvarchar(max)" />
+          <Property Name="CourseNumber" Type="int" Nullable="false" />
+          <Property Name="CreditHours" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Concentration">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="HoursRequired" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ConcentrationBaseCourses">
+          <Key>
+            <PropertyRef Name="ConcentrationID" />
+            <PropertyRef Name="BaseCourseID" />
+          </Key>
+          <Property Name="ConcentrationID" Type="int" Nullable="false" />
+          <Property Name="BaseCourseID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Course">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Semester" Type="nvarchar(max)" />
+          <Property Name="Grade" Type="int" />
+          <Property Name="Selected" Type="bit" Nullable="false" />
+          <Property Name="BaseCourseID" Type="int" Nullable="false" />
+          <Property Name="Student_ID" Type="int" />
+          <Property Name="Student_ID1" Type="int" />
+        </EntityType>
+        <EntityType Name="Prerequisite">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PrereqName" Type="nvarchar(max)" />
+          <Property Name="BaseCourse_ID" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view '8EEBD89FD4E8421231CB0BA5A3926690_AL STUDIO 2013\PROJECTS\CMPSADVISINGDB\CMPSADVISINGDB\CMPSADVISINGDB\APP_DATA\CMPSADVISING1.MDF.dbo.Semesters' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Semesters">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Sname" />
+            <PropertyRef Name="Syear" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Sname" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="Syear" Type="nvarchar" MaxLength="4" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar(max)" />
+          <Property Name="LastName" Type="nvarchar(max)" />
+          <Property Name="WNumber" Type="nvarchar(max)" />
+          <Property Name="HoursCompleted" Type="int" Nullable="false" />
+          <Property Name="GPA" Type="float" Nullable="false" />
+          <Property Name="StudentConcentration_ID" Type="int" />
+        </EntityType>
+        <Association Name="FK_dbo_ConcentrationBaseCourses_dbo_BaseCourses_BaseCourse_ID">
+          <End Role="BaseCourse" Type="Self.BaseCourse" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ConcentrationBaseCourses" Type="Self.ConcentrationBaseCourses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BaseCourse">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ConcentrationBaseCourses">
+              <PropertyRef Name="BaseCourseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_ConcentrationBaseCourses_dbo_Concentrations_Concentration_ID">
+          <End Role="Concentration" Type="Self.Concentration" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ConcentrationBaseCourses" Type="Self.ConcentrationBaseCourses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Concentration">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ConcentrationBaseCourses">
+              <PropertyRef Name="ConcentrationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Courses_dbo_BaseCourses_BaseCourseID">
+          <End Role="BaseCourse" Type="Self.BaseCourse" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Course" Type="Self.Course" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BaseCourse">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Course">
+              <PropertyRef Name="BaseCourseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Courses_dbo_Students_Student_ID">
+          <End Role="Student" Type="Self.Student" Multiplicity="0..1" />
+          <End Role="Course" Type="Self.Course" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Course">
+              <PropertyRef Name="Student_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Courses_dbo_Students_Student_ID1">
+          <End Role="Student" Type="Self.Student" Multiplicity="0..1" />
+          <End Role="Course" Type="Self.Course" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Course">
+              <PropertyRef Name="Student_ID1" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Prerequisites_dbo_BaseCourses_BaseCourse_ID">
+          <End Role="BaseCourse" Type="Self.BaseCourse" Multiplicity="0..1" />
+          <End Role="Prerequisite" Type="Self.Prerequisite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BaseCourse">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Prerequisite">
+              <PropertyRef Name="BaseCourse_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Students_dbo_Concentrations_StudentConcentration_ID">
+          <End Role="Concentration" Type="Self.Concentration" Multiplicity="0..1" />
+          <End Role="Student" Type="Self.Student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Concentration">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Student">
+              <PropertyRef Name="StudentConcentration_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CMPSAdvising1ModelStoreContainer">
+          <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BaseCourse" EntityType="Self.BaseCourse" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Concentration" EntityType="Self.Concentration" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ConcentrationBaseCourses" EntityType="Self.ConcentrationBaseCourses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Course" EntityType="Self.Course" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Prerequisite" EntityType="Self.Prerequisite" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Student" EntityType="Self.Student" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Semesters" EntityType="Self.Semesters" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Semesters].[ID] AS [ID], 
+    [Semesters].[Sname] AS [Sname], 
+    [Semesters].[Syear] AS [Syear]
+    FROM [dbo].[Semesters] AS [Semesters]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_dbo_ConcentrationBaseCourses_dbo_BaseCourses_BaseCourse_ID" Association="Self.FK_dbo_ConcentrationBaseCourses_dbo_BaseCourses_BaseCourse_ID">
+            <End Role="BaseCourse" EntitySet="BaseCourse" />
+            <End Role="ConcentrationBaseCourses" EntitySet="ConcentrationBaseCourses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_ConcentrationBaseCourses_dbo_Concentrations_Concentration_ID" Association="Self.FK_dbo_ConcentrationBaseCourses_dbo_Concentrations_Concentration_ID">
+            <End Role="Concentration" EntitySet="Concentration" />
+            <End Role="ConcentrationBaseCourses" EntitySet="ConcentrationBaseCourses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Courses_dbo_BaseCourses_BaseCourseID" Association="Self.FK_dbo_Courses_dbo_BaseCourses_BaseCourseID">
+            <End Role="BaseCourse" EntitySet="BaseCourse" />
+            <End Role="Course" EntitySet="Course" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Courses_dbo_Students_Student_ID" Association="Self.FK_dbo_Courses_dbo_Students_Student_ID">
+            <End Role="Student" EntitySet="Student" />
+            <End Role="Course" EntitySet="Course" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Courses_dbo_Students_Student_ID1" Association="Self.FK_dbo_Courses_dbo_Students_Student_ID1">
+            <End Role="Student" EntitySet="Student" />
+            <End Role="Course" EntitySet="Course" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Prerequisites_dbo_BaseCourses_BaseCourse_ID" Association="Self.FK_dbo_Prerequisites_dbo_BaseCourses_BaseCourse_ID">
+            <End Role="BaseCourse" EntitySet="BaseCourse" />
+            <End Role="Prerequisite" EntitySet="Prerequisite" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Students_dbo_Concentrations_StudentConcentration_ID" Association="Self.FK_dbo_Students_dbo_Concentrations_StudentConcentration_ID">
+            <End Role="Concentration" EntitySet="Concentration" />
+            <End Role="Student" EntitySet="Student" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CMPSAdvising1Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="BaseCourse">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Department" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CourseNumber" Type="Int32" Nullable="false" />
+          <Property Name="CreditHours" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Courses" Relationship="Self.FK_dbo_Courses_dbo_BaseCourses_BaseCourseID" FromRole="BaseCourse" ToRole="Course" />
+          <NavigationProperty Name="Prerequisites" Relationship="Self.FK_dbo_Prerequisites_dbo_BaseCourses_BaseCourse_ID" FromRole="BaseCourse" ToRole="Prerequisite" />
+          <NavigationProperty Name="Concentrations" Relationship="Self.ConcentrationBaseCourses" FromRole="BaseCourse" ToRole="Concentration" />
+        </EntityType>
+        <EntityType Name="Concentration">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="HoursRequired" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Students" Relationship="Self.FK_dbo_Students_dbo_Concentrations_StudentConcentration_ID" FromRole="Concentration" ToRole="Student" />
+          <NavigationProperty Name="RequiredCourses" Relationship="Self.ConcentrationBaseCourses" FromRole="Concentration" ToRole="BaseCourse" />
+        </EntityType>
+        <EntityType Name="Course">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Semester" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Grade" Type="Int32" />
+          <Property Name="Selected" Type="Boolean" Nullable="false" />
+          <Property Name="BaseCourseID" Type="Int32" Nullable="false" />
+          <Property Name="Student_ID_Taken" Type="Int32" />
+          <Property Name="Student_ID_Recommend" Type="Int32" />
+          <NavigationProperty Name="BaseCourse" Relationship="Self.FK_dbo_Courses_dbo_BaseCourses_BaseCourseID" FromRole="Course" ToRole="BaseCourse" />
+          <NavigationProperty Name="Student_Taken" Relationship="Self.FK_dbo_Courses_dbo_Students_Student_ID" FromRole="Course" ToRole="Student" />
+          <NavigationProperty Name="Student_Recommend" Relationship="Self.FK_dbo_Courses_dbo_Students_Student_ID1" FromRole="Course" ToRole="Student" />
+        </EntityType>
+        <EntityType Name="Prerequisite">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PrereqName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="BaseCourse_PreReqIsFor_ID" Type="Int32" />
+          <NavigationProperty Name="BaseCourse_PreReqIsFor" Relationship="Self.FK_dbo_Prerequisites_dbo_BaseCourses_BaseCourse_ID" FromRole="Prerequisite" ToRole="BaseCourse" />
+        </EntityType>
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="WNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="HoursCompleted" Type="Int32" Nullable="false" />
+          <Property Name="GPA" Type="Double" Nullable="false" />
+          <Property Name="StudentConcentration_ID" Type="Int32" />
+          <NavigationProperty Name="Concentration" Relationship="Self.FK_dbo_Students_dbo_Concentrations_StudentConcentration_ID" FromRole="Student" ToRole="Concentration" />
+          <NavigationProperty Name="CoursesTaken" Relationship="Self.FK_dbo_Courses_dbo_Students_Student_ID" FromRole="Student" ToRole="Course" />
+          <NavigationProperty Name="CoursesRecommended" Relationship="Self.FK_dbo_Courses_dbo_Students_Student_ID1" FromRole="Student" ToRole="Course" />
+        </EntityType>
+        <Association Name="FK_dbo_Courses_dbo_BaseCourses_BaseCourseID">
+          <End Role="BaseCourse" Type="Self.BaseCourse" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Course" Type="Self.Course" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BaseCourse">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Course">
+              <PropertyRef Name="BaseCourseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Prerequisites_dbo_BaseCourses_BaseCourse_ID">
+          <End Role="BaseCourse" Type="Self.BaseCourse" Multiplicity="0..1" />
+          <End Role="Prerequisite" Type="Self.Prerequisite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BaseCourse">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Prerequisite">
+              <PropertyRef Name="BaseCourse_PreReqIsFor_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Students_dbo_Concentrations_StudentConcentration_ID">
+          <End Role="Concentration" Type="Self.Concentration" Multiplicity="0..1" />
+          <End Role="Student" Type="Self.Student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Concentration">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Student">
+              <PropertyRef Name="StudentConcentration_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Courses_dbo_Students_Student_ID">
+          <End Role="Student" Type="Self.Student" Multiplicity="0..1" />
+          <End Role="Course" Type="Self.Course" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Course">
+              <PropertyRef Name="Student_ID_Taken" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Courses_dbo_Students_Student_ID1">
+          <End Role="Student" Type="Self.Student" Multiplicity="0..1" />
+          <End Role="Course" Type="Self.Course" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Course">
+              <PropertyRef Name="Student_ID_Recommend" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ConcentrationBaseCourses">
+          <End Role="BaseCourse" Type="Self.BaseCourse" Multiplicity="*" />
+          <End Role="Concentration" Type="Self.Concentration" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="CMPSAdvising1Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="BaseCourses" EntityType="Self.BaseCourse" />
+          <EntitySet Name="Concentrations" EntityType="Self.Concentration" />
+          <EntitySet Name="Courses" EntityType="Self.Course" />
+          <EntitySet Name="Prerequisites" EntityType="Self.Prerequisite" />
+          <EntitySet Name="Students" EntityType="Self.Student" />
+          <AssociationSet Name="FK_dbo_Courses_dbo_BaseCourses_BaseCourseID" Association="Self.FK_dbo_Courses_dbo_BaseCourses_BaseCourseID">
+            <End Role="BaseCourse" EntitySet="BaseCourses" />
+            <End Role="Course" EntitySet="Courses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Prerequisites_dbo_BaseCourses_BaseCourse_ID" Association="Self.FK_dbo_Prerequisites_dbo_BaseCourses_BaseCourse_ID">
+            <End Role="BaseCourse" EntitySet="BaseCourses" />
+            <End Role="Prerequisite" EntitySet="Prerequisites" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Students_dbo_Concentrations_StudentConcentration_ID" Association="Self.FK_dbo_Students_dbo_Concentrations_StudentConcentration_ID">
+            <End Role="Concentration" EntitySet="Concentrations" />
+            <End Role="Student" EntitySet="Students" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Courses_dbo_Students_Student_ID" Association="Self.FK_dbo_Courses_dbo_Students_Student_ID">
+            <End Role="Student" EntitySet="Students" />
+            <End Role="Course" EntitySet="Courses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Courses_dbo_Students_Student_ID1" Association="Self.FK_dbo_Courses_dbo_Students_Student_ID1">
+            <End Role="Student" EntitySet="Students" />
+            <End Role="Course" EntitySet="Courses" />
+          </AssociationSet>
+          <AssociationSet Name="ConcentrationBaseCourses" Association="Self.ConcentrationBaseCourses">
+            <End Role="BaseCourse" EntitySet="BaseCourses" />
+            <End Role="Concentration" EntitySet="Concentrations" />
+          </AssociationSet>
+          <EntitySet Name="C__MigrationHistory" EntityType="CMPSAdvising1Model.C__MigrationHistory" />
+          <EntitySet Name="Semesters" EntityType="CMPSAdvising1Model.Semester" />
+        </EntityContainer>
+        <EntityType Name="C__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="ContextKey" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Model" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+          <Property Name="ProductVersion" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Semester">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Sname" />
+            <PropertyRef Name="Syear" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Sname" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Syear" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="true" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CMPSAdvising1ModelStoreContainer" CdmEntityContainer="CMPSAdvising1Entities">
+          <EntitySetMapping Name="BaseCourses">
+            <EntityTypeMapping TypeName="CMPSAdvising1Model.BaseCourse">
+              <MappingFragment StoreEntitySet="BaseCourse">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Department" ColumnName="Department" />
+                <ScalarProperty Name="CourseNumber" ColumnName="CourseNumber" />
+                <ScalarProperty Name="CreditHours" ColumnName="CreditHours" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Concentrations">
+            <EntityTypeMapping TypeName="CMPSAdvising1Model.Concentration">
+              <MappingFragment StoreEntitySet="Concentration">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="HoursRequired" ColumnName="HoursRequired" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Courses">
+            <EntityTypeMapping TypeName="CMPSAdvising1Model.Course">
+              <MappingFragment StoreEntitySet="Course">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Semester" ColumnName="Semester" />
+                <ScalarProperty Name="Grade" ColumnName="Grade" />
+                <ScalarProperty Name="Selected" ColumnName="Selected" />
+                <ScalarProperty Name="BaseCourseID" ColumnName="BaseCourseID" />
+                <ScalarProperty Name="Student_ID_Taken" ColumnName="Student_ID" />
+                <ScalarProperty Name="Student_ID_Recommend" ColumnName="Student_ID1" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Prerequisites">
+            <EntityTypeMapping TypeName="CMPSAdvising1Model.Prerequisite">
+              <MappingFragment StoreEntitySet="Prerequisite">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="PrereqName" ColumnName="PrereqName" />
+                <ScalarProperty Name="BaseCourse_PreReqIsFor_ID" ColumnName="BaseCourse_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Students">
+            <EntityTypeMapping TypeName="CMPSAdvising1Model.Student">
+              <MappingFragment StoreEntitySet="Student">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="WNumber" ColumnName="WNumber" />
+                <ScalarProperty Name="HoursCompleted" ColumnName="HoursCompleted" />
+                <ScalarProperty Name="GPA" ColumnName="GPA" />
+                <ScalarProperty Name="StudentConcentration_ID" ColumnName="StudentConcentration_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="ConcentrationBaseCourses" TypeName="CMPSAdvising1Model.ConcentrationBaseCourses" StoreEntitySet="ConcentrationBaseCourses">
+            <EndProperty Name="BaseCourse">
+              <ScalarProperty Name="ID" ColumnName="BaseCourseID" />
+            </EndProperty>
+            <EndProperty Name="Concentration">
+              <ScalarProperty Name="ID" ColumnName="ConcentrationID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="C__MigrationHistory">
+            <EntityTypeMapping TypeName="CMPSAdvising1Model.C__MigrationHistory">
+              <MappingFragment StoreEntitySet="__MigrationHistory">
+                <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
+                <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Semesters">
+            <EntityTypeMapping TypeName="CMPSAdvising1Model.Semester">
+              <MappingFragment StoreEntitySet="Semesters">
+                <ScalarProperty Name="Syear" ColumnName="Syear" />
+                <ScalarProperty Name="Sname" ColumnName="Sname" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

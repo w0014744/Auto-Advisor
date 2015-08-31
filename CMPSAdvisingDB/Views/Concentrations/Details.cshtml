@@ -1,0 +1,43 @@
+﻿@model CMPSAdvisingDB.Concentration
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>@Model.Name</h4>
+    <hr />
+    <h4>Hours Required: @Model.HoursRequired</h4>
+</div>
+
+<div>
+    <h4>Courses Required</h4>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Department</th>
+                <th>Number</th>
+                <th>Credit Hours</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var bc in Model.RequiredCourses)
+            {
+                <tr>
+                    <td>@bc.Name</td>
+                    <td>@bc.Department</td>
+                    <td>@bc.CourseNumber</td>
+                    <td>@bc.CreditHours</td>
+                </tr>
+            }     
+        </tbody>
+    </table>
+</div>
+
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

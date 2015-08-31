@@ -1,0 +1,45 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMPSAdvisingDB", "CMPSAdvisingDB\CMPSAdvisingDB.csproj", "{76437CB6-0888-4D87-B0AC-468315582760}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PublishScripts", "PublishScripts", "{EF2F6B1F-27A9-425B-8DE7-B62EC6A015D6}"
+	ProjectSection(SolutionItems) = preProject
+		PublishScripts\AzureWebsitePublishModule.psm1 = PublishScripts\AzureWebsitePublishModule.psm1
+		PublishScripts\Publish-WebApplicationWebsite.ps1 = PublishScripts\Publish-WebApplicationWebsite.ps1
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configurations", "Configurations", "{02973317-1C53-4960-B5D2-2EB50B8C5E2C}"
+	ProjectSection(SolutionItems) = preProject
+		PublishScripts\Configurations\CMPSAdvisingDB-WAWS-dev.json = PublishScripts\Configurations\CMPSAdvisingDB-WAWS-dev.json
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{82D5FCE8-030B-4354-8EA8-04D65A02B2A9}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\packages.config = .nuget\packages.config
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{76437CB6-0888-4D87-B0AC-468315582760}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76437CB6-0888-4D87-B0AC-468315582760}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76437CB6-0888-4D87-B0AC-468315582760}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76437CB6-0888-4D87-B0AC-468315582760}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{02973317-1C53-4960-B5D2-2EB50B8C5E2C} = {EF2F6B1F-27A9-425B-8DE7-B62EC6A015D6}
+	EndGlobalSection
+EndGlobal

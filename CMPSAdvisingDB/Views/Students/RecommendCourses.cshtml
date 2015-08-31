@@ -1,0 +1,43 @@
+﻿@model CMPSAdvisingDB.Student
+
+@{
+    ViewBag.Title = "RecommendCourses";
+}
+
+<h3>Name: @Model.FirstName @Model.LastName</h3>
+<h3>W#: @Model.WNumber</h3>
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title">
+            Recommended Courses
+        </h3>
+    </div>
+    <div class="panel-body">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Course Name</th>
+                    <th>Department</th>
+                    <th>Course Number</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.CoursesRecommended)
+                {
+                    <tr>
+                        <td>@item.BaseCourse.Name</td>
+                        <td>@item.BaseCourse.Department</td>
+                        <td>@item.BaseCourse.CourseNumber</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<p>
+    @Html.ActionLink("Student Details", "Details", new { id = Model.ID }) |
+    @Html.ActionLink("Back to Student List", "Index")
+</p>
+

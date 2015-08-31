@@ -1,0 +1,215 @@
+﻿@model CMPSAdvisingDB.Student
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <h3> @Model.FirstName @Model.LastName</h3>
+        </div>
+        <div class="col-md-4">
+            <h3> @Model.WNumber</h3>
+        </div>
+        <div class="col-md-4">
+            <h3> @Model.Concentration.Name</h3>
+        </div>
+    </div> 
+        <div class="row">
+            <div class="col-md-5">
+                <a class="btn btn-danger" href="@Url.Action("AddCourseVM", new { id=Model.ID })">Add Courses Taken</a>
+            </div>
+        </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        Math Courses
+                    </h3>
+                    <span class="pull-right clickable"><i class="glyphicon glyphicon-minus"></i></span>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-striped custab">
+                        <thead>
+                            <tr>
+                                <th>Course</th>
+                                <th>Number</th>
+                                <th>Credit Hours</th>
+                                <th>Grade</th>
+                                <th>Semester</th>
+                                <th class="text-center">Action</th>
+                            </tr>
+                        </thead>
+                        @{var mathCourses = ViewData["mathCourses"];}
+                        @foreach (Course c in mathCourses as List<Course>)
+                        {
+                            <tr>
+                                <td>@c.BaseCourse.Name</td>
+                                <td>@c.BaseCourse.CourseNumber</td>
+                                <td>@c.BaseCourse.CreditHours</td>
+                                <td>@c.Grade.ToString()</td>
+                                <td>@c.Semester</td>
+                                <td><a class='btn btn-info btn-xs' href="@Url.Action("Edit","Courses",new { id = c.ID })"><span class="glyphicon glyphicon-edit"></span> Edit</a></td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+            </div>
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        English Courses
+                    </h3>
+                    <span class="pull-right clickable"><i class="glyphicon glyphicon-minus"></i></span>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-striped custab">
+                        <thead>
+                            <tr>
+                                <th>Course</th>
+                                <th>Number</th>
+                                <th>Credit Hours</th>
+                                <th>Grade</th>
+                                <th>Semester</th>
+                                <th class="text-center">Action</th>
+                            </tr>
+                        </thead>
+                        @{var englishCourses = ViewData["englishCourses"];}
+                        @foreach (Course c in englishCourses as List<Course>)
+                        {
+                            <tr>
+                                <td>@c.BaseCourse.Name</td>
+                                <td>@c.BaseCourse.CourseNumber</td>
+                                <td>@c.BaseCourse.CreditHours</td>
+                                <td>@c.Grade.ToString()</td>
+                                <td>@c.Semester</td>
+                                <td><a class='btn btn-info btn-xs' href="@Url.Action("Edit","Courses",new { id = c.ID })"><span class="glyphicon glyphicon-edit"></span> Edit</a></td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+            </div>
+            <div class="panel panel-primary">
+                <div class="panel-heading clickable">
+                    <h3 class="panel-title">
+                        Natural Sciences
+                    </h3>
+                    <span class="pull-right "><i class="glyphicon glyphicon-minus"></i></span>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-striped custab">
+                        <thead>
+                            <tr>
+                                <th>Course</th>
+                                <th>Number</th>
+                                <th>Credit Hours</th>
+                                <th>Grade</th>
+                                <th>Semester</th>
+                                <th class="text-center">Action</th>
+                            </tr>
+                        </thead>
+                        @{var sciCourses = ViewData["scienceCourses"];}
+                        @foreach (Course c in sciCourses as List<Course>)
+                        {
+                            <tr>
+                                <td>@c.BaseCourse.Name</td>
+                                <td>@c.BaseCourse.CourseNumber</td>
+                                <td>@c.BaseCourse.CreditHours</td>
+                                <td>@c.Grade.ToString()</td>
+                                <td>@c.Semester</td>
+                                <td><a class='btn btn-info btn-xs' href="@Url.Action("Edit","Courses",new { id = c.ID })"><span class="glyphicon glyphicon-edit"></span> Edit</a></td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+            </div>
+            <div class="panel panel-primary">
+                <div class="panel-heading clickable">
+                    <h3 class="panel-title">
+                        Computer Science
+                    </h3>
+                    <span class="pull-right "><i class="glyphicon glyphicon-minus"></i></span>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-striped custab">
+                        <thead>
+                            <tr>
+                                <th>Course</th>
+                                <th>Number</th>
+                                <th>Credit Hours</th>
+                                <th>Grade</th>
+                                <th>Semester</th>
+                                <th class="text-center">Action</th>
+                            </tr>
+                        </thead>
+                        @{var cmpsCourses = ViewData["cmpsCourses"];}
+                        @foreach (Course c in cmpsCourses as List<Course>)
+                        {
+                            <tr>
+                                <td>@c.BaseCourse.Name</td>
+                                <td>@c.BaseCourse.CourseNumber</td>
+                                <td>@c.BaseCourse.CreditHours</td>
+                                <td>@c.Grade.ToString()</td>
+                                <td>@c.Semester</td>
+                                <td><a class='btn btn-info btn-xs' href="@Url.Action("Edit","Courses",new { id = c.ID })"><span class="glyphicon glyphicon-edit"></span> Edit</a></td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <a class="btn btn-info" href="@Url.Action("RecommendCourses", new { id=Model.ID })">Recommed Courses</a>
+                    </div>
+                    <div class="col-md-4">
+                        <a class="btn btn-danger" href="@Url.Action("ResetRecomendations", new { id=Model.ID })">Reset Recomendations</a>
+                    </div>
+                    <div class="col-md-4">
+                        <a class="btn btn-danger" href="@Url.Action("ResetTaken", new { id=Model.ID })">Reset Courses Taken</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        Recommended Courses
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-striped custab">
+                        <thead>
+                            <tr>
+                                <th>Course</th> 
+                                <th>Department</th>
+                                <th>Course Number</th>
+                                <th>Credit Hours</th>
+                            </tr>
+                        </thead>
+                        @foreach (Course c in Model.CoursesRecommended)
+                        {
+                            <tr>
+                                <td>@c.BaseCourse.Name</td>
+                                <td>@c.BaseCourse.Department</td>
+                                <td>@c.BaseCourse.CourseNumber</td>
+                                <td>@c.BaseCourse.CreditHours</td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div>
+    <p>
+        @Html.ActionLink("Edit Student", "Edit", new { id = Model.ID }) |
+        @Html.ActionLink("Back to Master Student List", "Index")
+    </p>
+</div>

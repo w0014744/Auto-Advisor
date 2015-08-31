@@ -1,0 +1,12 @@
+﻿
+
+<div class="container">
+    <h2>CMPS Auto-Adviser</h2>
+    <h3>@Html.ActionLink("Students List", "Index", "Students")</h3>
+    <h3>@Html.ActionLink("Concentrations","Index","Concentrations")</h3>
+    <h3>@Html.ActionLink("Course Catalog","Index","BaseCourses")</h3>
+    @if (ViewBag.UserID != null)
+    { 
+    <h3>@Html.ActionLink("Access My Details", "Details", "Students", new { id=ViewBag.UserID }, null)</h3>
+    }
+</div>

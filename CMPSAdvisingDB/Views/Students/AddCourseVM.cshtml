@@ -1,0 +1,55 @@
+﻿@model CMPSAdvisingDB.ViewModels.AddCourseViewModel
+@{
+    ViewBag.Title = "AddCourseVM";
+
+}
+
+<h2>Add Courses</h2>
+
+<div>
+    <p>Name: @Model.Student.FirstName @Model.Student.LastName</p>
+    <p>W#: @Model.Student.WNumber</p>
+</div>
+
+<div>
+        <p>Select the Courses You Have Taken</p>
+</div>
+<div>
+    @using (Html.BeginForm("AddCourseVM","Students"))
+    {
+        @Html.AntiForgeryToken()
+        <div>
+            @Html.HiddenFor(s => Model.Student.ID)
+           
+
+            <table class="table table-bordered">
+                <tr>
+                    <th>Course</th>
+                    <th>Department</th>
+                    <th>Number</th>
+                    <th>Check if Taken</th>
+                    <th>Semester</th>
+                    <th>Grade</th>
+                </tr>
+                @for(var i = 0; i < Model.PossibleCourses.Count; i++)
+                {
+                    var course = Model.PossibleCourses[i];
+                    
+                    <tr>
+                        <td>@Html.TextBox(string.Format("PossibleCourses[{0}].BaseCourse.Name", i), course.BaseCourse.Name, new { @readonly="readonly"})</td>
+                        <td>@Html.TextBox(string.Format("PossibleCourses[{0}].BaseCourse.Department", i), course.BaseCourse.Department, new { @readonly="readonly" })</td>
+                        <td>@Html.TextBox(string.Format("PossibleCourses[{0}].BaseCourse.CourseNumber", i), course.BaseCourse.CourseNumber, new { @readonly="readonly" })</td>
+                        <td>@Html.CheckBox(string.Format("PossibleCourses[{0}].Selected", i), course.Selected)</td>
+                        @*<td>@Html.TextBox(string.Format("PossibleCourses[{0}].Semester", i), course.Semester)</td>*@
+                        <td>@Html.DropDownList(string.Format("PossibleCourses[{0}].Semester", i), ViewData["PossibleCourses.Semester"] as List<SelectListItem>)</td>
+                        <td>@Html.DropDownList(string.Format("PossibleCourses[{0}].Grade", i), ViewData["PossibleCourses.Grade"] as List<SelectListItem>) </td>                     
+                        @*<td>@Html.TextBox(string.Format("PossibleCourses[{0}].Grade", i), course.Grade)</td>*@
+                     
+                    </tr>
+                    @Html.Hidden(string.Format("PossibleCourses[{0}].BaseCourse.ID", i), course.BaseCourse.ID)
+                }
+            </table>
+            <input type="submit" value="Save Classes Taken" class="btn btn-default" />
+        </div>
+    }
+</div>

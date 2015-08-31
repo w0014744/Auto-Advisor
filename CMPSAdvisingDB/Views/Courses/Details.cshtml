@@ -1,0 +1,66 @@
+﻿@model CMPSAdvisingDB.Course
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Course</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Semester)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Semester)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Grade)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Grade)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Selected)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Selected)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BaseCourse.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BaseCourse.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Student_Taken.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Student_Taken.FirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Student_Recommend.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Student_Recommend.FirstName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

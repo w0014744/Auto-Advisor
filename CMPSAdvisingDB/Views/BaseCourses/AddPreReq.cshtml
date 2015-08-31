@@ -1,0 +1,21 @@
+﻿@model CMPSAdvisingDB.BaseCourse
+
+@{
+    ViewBag.Title = "AddPreReq";
+}
+
+<h2>Add Prerequisite</h2>
+
+@using(Html.BeginForm("AddPreReq","BaseCourses"))
+{
+    @Html.AntiForgeryToken();
+    <div class="form-group">
+        @Html.Label("preReqName", "Enter Department code and course number for the Prerequisite:")
+        @Html.TextBox("preReqName")
+        @Html.Hidden("id", new { id=Model.ID })
+    </div>
+    <div>
+        <input type="submit" value="Save Prerequisite" class="btn btn-default" />
+    </div>
+}
+
