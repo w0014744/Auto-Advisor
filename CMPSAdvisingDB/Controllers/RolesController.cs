@@ -30,7 +30,7 @@ namespace CMPSAdvisingDB.Controllers
         }
 
 
-        [Authorize(Roles = "Admin")]
+       [Authorize(Roles = "Admin")]
         public ActionResult Create(string message = "")
         {
             ViewBag.Message = message;
@@ -80,7 +80,7 @@ namespace CMPSAdvisingDB.Controllers
 
 
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+       [Authorize(Roles = "Admin")]
         public ActionResult Edit([Bind(Include =
             "RoleName,OriginalRoleName,Description")] EditRoleViewModel model)
         {

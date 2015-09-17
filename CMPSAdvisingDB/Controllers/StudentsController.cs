@@ -217,7 +217,7 @@ namespace CMPSAdvisingDB.Controllers
         }
 
         // GET: Students/Create
-        [Authorize(Roles = "Admin,Professor")]
+        [Authorize]
         public ActionResult Create()
         {
             ViewBag.StudentConcentration_ID = new SelectList(db.Concentrations, "ID", "Name");
