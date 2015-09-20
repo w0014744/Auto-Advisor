@@ -40,6 +40,10 @@ namespace CMPSAdvisingDB.Controllers
                 if (studentLoggedIn != null)
                 {
                     ViewBag.UserID = studentLoggedIn.ID;
+                    if (User.IsInRole("Student") && (!User.IsInRole("Admin")) && (!User.IsInRole("Professor")))
+                    {
+                        return RedirectToAction("Details", "Students", new { id = studentLoggedIn.ID });
+                    }
                 }
             }
             return View();

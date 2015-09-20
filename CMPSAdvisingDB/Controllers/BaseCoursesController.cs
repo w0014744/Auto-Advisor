@@ -93,16 +93,16 @@ namespace CMPSAdvisingDB.Controllers
             switch (sortOrder)
             {
                 case "dept_desc":
-                    bCourses = bCourses.OrderByDescending(b => b.Department);
+                    bCourses = bCourses.OrderByDescending(b => b.Department).ThenBy(b => b.CourseNumber);
                     break;
                 case "Number":
-                    bCourses = bCourses.OrderBy(b => b.CourseNumber);
+                    bCourses = bCourses.OrderBy(b => b.CourseNumber).ThenBy(b => b.Department);
                     break;
                 case "number_desc":
-                    bCourses = bCourses.OrderByDescending(b => b.CourseNumber);
+                    bCourses = bCourses.OrderByDescending(b => b.CourseNumber).ThenBy(b => b.Department);
                     break;
                 default:
-                    bCourses = bCourses.OrderBy(b => b.Department);
+                    bCourses = bCourses.OrderBy(b => b.Department).ThenBy(b => b.CourseNumber);
                     break;
             }
 
