@@ -186,6 +186,7 @@ namespace CMPSAdvisingDB.Controllers
         }
 
         // GET: Students
+        [Authorize(Roles = "Admin,Professor")]
         public ActionResult Index()
         {
             var students = db.Students.Include(s => s.Concentration);

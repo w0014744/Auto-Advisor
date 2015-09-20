@@ -10,7 +10,7 @@ using CMPSAdvisingDB;
 
 namespace CMPSAdvisingDB.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin,Professor")]
     public class PrerequisitesController : Controller
     {
         private CMPSAdvising1Entities db = new CMPSAdvising1Entities();
