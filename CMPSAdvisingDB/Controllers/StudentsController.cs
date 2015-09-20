@@ -217,7 +217,7 @@ namespace CMPSAdvisingDB.Controllers
         }
 
         // GET: Students/Create
-        [Authorize]
+        [Authorize(Roles = "Admin,Professor")]
         public ActionResult Create()
         {
             ViewBag.StudentConcentration_ID = new SelectList(db.Concentrations, "ID", "Name");
@@ -244,6 +244,7 @@ namespace CMPSAdvisingDB.Controllers
         }
 
         // GET: Students/Edit/5
+        [Authorize(Roles = "Student,Admin,Professor")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -264,6 +265,7 @@ namespace CMPSAdvisingDB.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Student,Admin,Professor")]
         public ActionResult Edit([Bind(Include = "ID,FirstName,LastName,WNumber,HoursCompleted,GPA,StudentConcentration_ID")] Student student)
         {
             if (ModelState.IsValid)
