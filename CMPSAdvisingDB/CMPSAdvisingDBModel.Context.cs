@@ -32,5 +32,7 @@ namespace CMPSAdvisingDB
         public virtual DbSet<Student> Students { get; set; }
         public virtual DbSet<C__MigrationHistory> C__MigrationHistory { get; set; }
         public virtual DbSet<Semester> Semesters { get; set; }
+        public virtual DbSet<Grade> Grades { get; set; }
+        public virtual DbSet<Professor> Professors { get; set; }
     }
 }

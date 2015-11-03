@@ -18,6 +18,9 @@
         <AssociationConnector Association="CMPSAdvising1Model.ConcentrationBaseCourses" ManuallyRouted="false" />
         <EntityTypeShape EntityType="CMPSAdvising1Model.C__MigrationHistory" Width="1.5" PointX="2.375" PointY="1.125" />
         <EntityTypeShape EntityType="CMPSAdvising1Model.Semester" Width="1.5" PointX="4.375" PointY="1.125" />
+        <EntityTypeShape EntityType="CMPSAdvising1Model.Grade" Width="1.5" PointX="8.125" PointY="1.625" />
+        <EntityTypeShape EntityType="CMPSAdvising1Model.Professor" Width="1.5" PointX="8.5" PointY="7.625" />
+        <AssociationConnector Association="CMPSAdvising1Model.FK_Student_Professor" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

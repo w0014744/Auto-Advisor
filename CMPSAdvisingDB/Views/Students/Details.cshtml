@@ -52,7 +52,7 @@
                                 <td>@c.BaseCourse.Name</td>
                                 <td>@c.BaseCourse.CourseNumber</td>
                                 <td>@c.BaseCourse.CreditHours</td>
-                                <td>@c.Grade.ToString()</td>
+                                <td>@c.toLetter((int)c.Grade)</td>
                                 <td>@c.Semester</td>
                                 <td><a class='btn btn-info btn-xs' href="@Url.Action("Edit","Courses",new { id = c.ID })"><span class="glyphicon glyphicon-edit"></span> Edit</a></td>
                             </tr>
@@ -86,7 +86,7 @@
                                 <td>@c.BaseCourse.Name</td>
                                 <td>@c.BaseCourse.CourseNumber</td>
                                 <td>@c.BaseCourse.CreditHours</td>
-                                <td>@c.Grade.ToString()</td>
+                                <td>@c.toLetter((int)c.Grade)</td>
                                 <td>@c.Semester</td>
                                 <td><a class='btn btn-info btn-xs' href="@Url.Action("Edit","Courses",new { id = c.ID })"><span class="glyphicon glyphicon-edit"></span> Edit</a></td>
                             </tr>
@@ -120,7 +120,7 @@
                                 <td>@c.BaseCourse.Name</td>
                                 <td>@c.BaseCourse.CourseNumber</td>
                                 <td>@c.BaseCourse.CreditHours</td>
-                                <td>@c.Grade.ToString()</td>
+                                <td>@c.toLetter((int)c.Grade)</td>
                                 <td>@c.Semester</td>
                                 <td><a class='btn btn-info btn-xs' href="@Url.Action("Edit","Courses",new { id = c.ID })"><span class="glyphicon glyphicon-edit"></span> Edit</a></td>
                             </tr>
@@ -154,7 +154,7 @@
                                 <td>@c.BaseCourse.Name</td>
                                 <td>@c.BaseCourse.CourseNumber</td>
                                 <td>@c.BaseCourse.CreditHours</td>
-                                <td>@c.Grade.ToString()</td>
+                                <td>@c.toLetter((int)c.Grade)</td>
                                 <td>@c.Semester</td>
                                 <td><a class='btn btn-info btn-xs' href="@Url.Action("Edit","Courses",new { id = c.ID })"><span class="glyphicon glyphicon-edit"></span> Edit</a></td>
                             </tr>

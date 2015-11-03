@@ -53,6 +53,14 @@
           <Property Name="Student_ID" Type="int" />
           <Property Name="Student_ID1" Type="int" />
         </EntityType>
+        <EntityType Name="Grade">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NumberValue" Type="int" Nullable="false" />
+          <Property Name="LetterValue" Type="varchar" MaxLength="1" Nullable="false" />
+        </EntityType>
         <EntityType Name="Prerequisite">
           <Key>
             <PropertyRef Name="ID" />
@@ -61,13 +69,19 @@
           <Property Name="PrereqName" Type="nvarchar(max)" />
           <Property Name="BaseCourse_ID" Type="int" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view '8EEBD89FD4E8421231CB0BA5A3926690_AL STUDIO 2013\PROJECTS\CMPSADVISINGDB\CMPSADVISINGDB\CMPSADVISINGDB\APP_DATA\CMPSADVISING1.MDF.dbo.Semesters' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Professor">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="WNumber" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="Semesters">
           <Key>
             <PropertyRef Name="ID" />
-            <PropertyRef Name="Sname" />
-            <PropertyRef Name="Syear" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Sname" Type="nvarchar" MaxLength="10" Nullable="false" />
@@ -84,6 +98,7 @@ warning 6002: The table/view '8EEBD89FD4E8421231CB0BA5A3926690_AL STUDIO 2013\PR
           <Property Name="HoursCompleted" Type="int" Nullable="false" />
           <Property Name="GPA" Type="float" Nullable="false" />
           <Property Name="StudentConcentration_ID" Type="int" />
+          <Property Name="Professor_ID" Type="int" />
         </EntityType>
         <Association Name="FK_dbo_ConcentrationBaseCourses_dbo_BaseCourses_BaseCourse_ID">
           <End Role="BaseCourse" Type="Self.BaseCourse" Multiplicity="1">
@@ -175,21 +190,29 @@ warning 6002: The table/view '8EEBD89FD4E8421231CB0BA5A3926690_AL STUDIO 2013\PR
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Student_Professor">
+          <End Role="Professor" Type="Self.Professor" Multiplicity="0..1" />
+          <End Role="Student" Type="Self.Student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Professor">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Student">
+              <PropertyRef Name="Professor_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="CMPSAdvising1ModelStoreContainer">
           <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BaseCourse" EntityType="Self.BaseCourse" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Concentration" EntityType="Self.Concentration" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ConcentrationBaseCourses" EntityType="Self.ConcentrationBaseCourses" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Course" EntityType="Self.Course" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Grade" EntityType="Self.Grade" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Prerequisite" EntityType="Self.Prerequisite" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Professor" EntityType="Self.Professor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Semesters" EntityType="Self.Semesters" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Student" EntityType="Self.Student" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Semesters" EntityType="Self.Semesters" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [Semesters].[ID] AS [ID], 
-    [Semesters].[Sname] AS [Sname], 
-    [Semesters].[Syear] AS [Syear]
-    FROM [dbo].[Semesters] AS [Semesters]</DefiningQuery>
-          </EntitySet>
           <AssociationSet Name="FK_dbo_ConcentrationBaseCourses_dbo_BaseCourses_BaseCourse_ID" Association="Self.FK_dbo_ConcentrationBaseCourses_dbo_BaseCourses_BaseCourse_ID">
             <End Role="BaseCourse" EntitySet="BaseCourse" />
             <End Role="ConcentrationBaseCourses" EntitySet="ConcentrationBaseCourses" />
@@ -216,6 +239,10 @@ warning 6002: The table/view '8EEBD89FD4E8421231CB0BA5A3926690_AL STUDIO 2013\PR
           </AssociationSet>
           <AssociationSet Name="FK_dbo_Students_dbo_Concentrations_StudentConcentration_ID" Association="Self.FK_dbo_Students_dbo_Concentrations_StudentConcentration_ID">
             <End Role="Concentration" EntitySet="Concentration" />
+            <End Role="Student" EntitySet="Student" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Student_Professor" Association="Self.FK_Student_Professor">
+            <End Role="Professor" EntitySet="Professor" />
             <End Role="Student" EntitySet="Student" />
           </AssociationSet>
         </EntityContainer>
@@ -284,6 +311,8 @@ warning 6002: The table/view '8EEBD89FD4E8421231CB0BA5A3926690_AL STUDIO 2013\PR
           <NavigationProperty Name="Concentration" Relationship="Self.FK_dbo_Students_dbo_Concentrations_StudentConcentration_ID" FromRole="Student" ToRole="Concentration" />
           <NavigationProperty Name="CoursesTaken" Relationship="Self.FK_dbo_Courses_dbo_Students_Student_ID" FromRole="Student" ToRole="Course" />
           <NavigationProperty Name="CoursesRecommended" Relationship="Self.FK_dbo_Courses_dbo_Students_Student_ID1" FromRole="Student" ToRole="Course" />
+          <Property Name="Professor_ID" Type="Int32" />
+          <NavigationProperty Name="Professor" Relationship="CMPSAdvising1Model.FK_Student_Professor" FromRole="Student" ToRole="Professor" />
         </EntityType>
         <Association Name="FK_dbo_Courses_dbo_BaseCourses_BaseCourseID">
           <End Role="BaseCourse" Type="Self.BaseCourse" Multiplicity="1">
@@ -383,6 +412,12 @@ warning 6002: The table/view '8EEBD89FD4E8421231CB0BA5A3926690_AL STUDIO 2013\PR
           </AssociationSet>
           <EntitySet Name="C__MigrationHistory" EntityType="CMPSAdvising1Model.C__MigrationHistory" />
           <EntitySet Name="Semesters" EntityType="CMPSAdvising1Model.Semester" />
+          <EntitySet Name="Grades" EntityType="CMPSAdvising1Model.Grade" />
+          <EntitySet Name="Professors" EntityType="CMPSAdvising1Model.Professor" />
+          <AssociationSet Name="FK_Student_Professor" Association="CMPSAdvising1Model.FK_Student_Professor">
+            <End Role="Professor" EntitySet="Professors" />
+            <End Role="Student" EntitySet="Students" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="C__MigrationHistory">
           <Key>
@@ -397,13 +432,42 @@ warning 6002: The table/view '8EEBD89FD4E8421231CB0BA5A3926690_AL STUDIO 2013\PR
         <EntityType Name="Semester">
           <Key>
             <PropertyRef Name="ID" />
-            <PropertyRef Name="Sname" />
-            <PropertyRef Name="Syear" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Sname" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Sname" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="Syear" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="Grade">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NumberValue" Type="Int32" Nullable="false" />
+          <Property Name="LetterValue" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Professor">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="WNumber" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Students" Relationship="CMPSAdvising1Model.FK_Student_Professor" FromRole="Professor" ToRole="Student" />
+        </EntityType>
+        <Association Name="FK_Student_Professor">
+          <End Type="CMPSAdvising1Model.Professor" Role="Professor" Multiplicity="0..1" />
+          <End Type="CMPSAdvising1Model.Student" Role="Student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Professor">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Student">
+              <PropertyRef Name="Professor_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -455,6 +519,7 @@ warning 6002: The table/view '8EEBD89FD4E8421231CB0BA5A3926690_AL STUDIO 2013\PR
           <EntitySetMapping Name="Students">
             <EntityTypeMapping TypeName="CMPSAdvising1Model.Student">
               <MappingFragment StoreEntitySet="Student">
+                <ScalarProperty Name="Professor_ID" ColumnName="Professor_ID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
@@ -488,6 +553,26 @@ warning 6002: The table/view '8EEBD89FD4E8421231CB0BA5A3926690_AL STUDIO 2013\PR
               <MappingFragment StoreEntitySet="Semesters">
                 <ScalarProperty Name="Syear" ColumnName="Syear" />
                 <ScalarProperty Name="Sname" ColumnName="Sname" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Grades">
+            <EntityTypeMapping TypeName="CMPSAdvising1Model.Grade">
+              <MappingFragment StoreEntitySet="Grade">
+                <ScalarProperty Name="LetterValue" ColumnName="LetterValue" />
+                <ScalarProperty Name="NumberValue" ColumnName="NumberValue" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Professors">
+            <EntityTypeMapping TypeName="CMPSAdvising1Model.Professor">
+              <MappingFragment StoreEntitySet="Professor">
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="WNumber" ColumnName="WNumber" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -12,26 +12,19 @@ namespace CMPSAdvisingDB
     using System;
     using System.Collections.Generic;
     
-    public partial class Student
+    public partial class Professor
     {
-        public Student()
+        public Professor()
         {
-            this.CoursesTaken = new HashSet<Course>();
-            this.CoursesRecommended = new HashSet<Course>();
+            this.Students = new HashSet<Student>();
         }
     
         public int ID { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string WNumber { get; set; }
-        public int HoursCompleted { get; set; }
-        public double GPA { get; set; }
-        public Nullable<int> StudentConcentration_ID { get; set; }
-        public Nullable<int> Professor_ID { get; set; }
+        public string Email { get; set; }
     
-        public virtual Concentration Concentration { get; set; }
-        public virtual ICollection<Course> CoursesTaken { get; set; }
-        public virtual ICollection<Course> CoursesRecommended { get; set; }
-        public virtual Professor Professor { get; set; }
+        public virtual ICollection<Student> Students { get; set; }
     }
 }
