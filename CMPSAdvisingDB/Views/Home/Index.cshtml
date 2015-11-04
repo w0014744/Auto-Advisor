@@ -1,12 +1,28 @@
 ﻿
 
 <div class="container">
-    <h2>CMPS Auto-Adviser</h2>
-    <h3>@Html.ActionLink("Students List", "Index", "Students")</h3>
-    <h3>@Html.ActionLink("Concentrations","Index","Concentrations")</h3>
-    <h3>@Html.ActionLink("Course Catalog","Index","BaseCourses")</h3>
+    <h2>CMPS Auto-Adviser Admin Controls</h2>
     @if (ViewBag.UserID != null)
-    { 
-    <h3>@Html.ActionLink("Access My Details", "Details", "Students", new { id=ViewBag.UserID }, null)</h3>
+    {
+        if (User.IsInRole("Student"))
+        {
+            <h3>@Html.ActionLink("Access Student Details", "Details", "Students", new { id = ViewBag.UserID }, null)</h3>
+        }
+        if (User.IsInRole("Professor"))
+        {
+            <h3>@Html.ActionLink("Access My Students List", "ListStudents", "Professors", new { id = ViewBag.UserID }, null)</h3>
+        }
+        if (User.IsInRole("Admin"))
+        {
+            <h3>@Html.ActionLink("Create Professor", "Create", "Professors")</h3>
+            <h3>@Html.ActionLink("List Professors", "Index", "Professors")</h3>
+
+        }
+        if (User.IsInRole("Professor") || User.IsInRole("Admin"))
+        {
+            <h3>@Html.ActionLink("Master Students List", "Index", "Students")</h3>
+            <h3>@Html.ActionLink("Concentrations", "Index", "Concentrations")</h3>
+            <h3>@Html.ActionLink("Course Catalog", "Index", "BaseCourses")</h3>
+        }
     }
 </div>

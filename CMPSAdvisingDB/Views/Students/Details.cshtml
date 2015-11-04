@@ -210,6 +210,7 @@
 <div>
     <p>
         @Html.ActionLink("Edit Student", "Edit", new { id = Model.ID }) |
-        @Html.ActionLink("Back to Master Student List", "Index")
+        @Html.ActionLink("My Students", "ListStudents", "Professors", new { id = Model.Professor_ID}, null) |
+        @Html.ActionLink("Master Student List", "Index")
     </p>
 </div>

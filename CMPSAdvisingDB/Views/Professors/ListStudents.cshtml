@@ -1,10 +1,11 @@
 ﻿@model IEnumerable<CMPSAdvisingDB.Student>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "ListStudents";
 }
 
-<h2>Students Index</h2>
+<h2>@ViewBag.ProfName</h2>
+<h2>My Students (To Be Advised)</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -12,25 +13,22 @@
 <table class="table">
     <tr>
         <th>
-            First Name
+            @Html.DisplayNameFor(model => model.FirstName)
         </th>
         <th>
-            Last Name
+            @Html.DisplayNameFor(model => model.LastName)
         </th>
         <th>
-            W Nmber
+            @Html.DisplayNameFor(model => model.WNumber)
         </th>
         <th>
-            Hours
+            @Html.DisplayNameFor(model => model.HoursCompleted)
         </th>
         <th>
-            GPA
+            @Html.DisplayNameFor(model => model.GPA)
         </th>
         <th>
-            Concentration
-        </th>
-        <th>
-            Adviser
+            @Html.DisplayNameFor(model => model.Concentration.Name)
         </th>
         <th></th>
     </tr>
@@ -56,12 +54,9 @@
             @Html.DisplayFor(modelItem => item.Concentration.Name)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Professor.LastName)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+            @Html.ActionLink("Edit", "Edit", "Students", new { id=item.ID }, null) |
+            @Html.ActionLink("Details", "Details", "Students",new { id=item.ID }, null) |
+            @Html.ActionLink("Delete", "Delete", "Students", new { id=item.ID }, null)
         </td>
     </tr>
 }

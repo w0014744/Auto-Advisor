@@ -31,7 +31,7 @@
                 <td>@c.BaseCourse.Department</td>
                 <td>@c.BaseCourse.CourseNumber</td>
                 <td>@c.Semester</td>
-                <td>@c.Grade</td>
+                <td>@c.toLetter((int)c.Grade)</td>
             </tr>
             }
         }

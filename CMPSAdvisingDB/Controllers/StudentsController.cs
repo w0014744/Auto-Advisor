@@ -258,6 +258,7 @@ namespace CMPSAdvisingDB.Controllers
                 return HttpNotFound();
             }
             ViewBag.StudentConcentration_ID = new SelectList(db.Concentrations, "ID", "Name", student.StudentConcentration_ID);
+            ViewBag.Professor_ID = new SelectList(db.Professors, "ID", "LastName", student.Professor_ID);
             return View(student);
         }
 
@@ -267,7 +268,7 @@ namespace CMPSAdvisingDB.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Student,Admin,Professor")]
-        public ActionResult Edit([Bind(Include = "ID,FirstName,LastName,WNumber,HoursCompleted,GPA,StudentConcentration_ID")] Student student)
+        public ActionResult Edit([Bind(Include = "ID,FirstName,LastName,WNumber,HoursCompleted,GPA,StudentConcentration_ID,Professor_ID")] Student student)
         {
             if (ModelState.IsValid)
             {
@@ -276,6 +277,7 @@ namespace CMPSAdvisingDB.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.StudentConcentration_ID = new SelectList(db.Concentrations, "ID", "Name", student.StudentConcentration_ID);
+            ViewBag.Professors_ID = new SelectList(db.Professors, "ID", "LastName", student.Professor_ID);
             return View(student);
         }
 

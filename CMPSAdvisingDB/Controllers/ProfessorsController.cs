@@ -20,6 +20,22 @@ namespace CMPSAdvisingDB.Controllers
             return View(db.Professors.ToList());
         }
 
+        public ActionResult ListStudents(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Professor prof = db.Professors.Find(id);
+            if (prof == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.ProfName = prof.FirstName + " " + prof.LastName;
+            List<Student> students = db.Students.Where(i => i.Professor_ID == id).ToList();
+            return View(students);
+        }
+
         // GET: Professors/Details/5
         public ActionResult Details(int? id)
         {
