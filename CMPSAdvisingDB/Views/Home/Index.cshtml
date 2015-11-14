@@ -4,11 +4,11 @@
     <h2>CMPS Auto-Adviser Admin Controls</h2>
     @if (ViewBag.UserID != null)
     {
-        if (User.IsInRole("Student"))
+        if (User.IsInRole("Student") && ViewBag.IsStudent)
         {
             <h3>@Html.ActionLink("Access Student Details", "Details", "Students", new { id = ViewBag.UserID }, null)</h3>
         }
-        if (User.IsInRole("Professor"))
+        if (User.IsInRole("Professor") && ViewBag.IsProf)
         {
             <h3>@Html.ActionLink("Access My Students List", "ListStudents", "Professors", new { id = ViewBag.UserID }, null)</h3>
         }

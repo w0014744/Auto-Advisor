@@ -36,13 +36,16 @@ namespace CMPSAdvisingDB.Controllers
             {
                 string userID = User.Identity.GetUserId();
                 string userW = _db.Users.Find(userID).wNumber;
-                if (User.IsInRole("Student") || User.IsInRole("Professor"))
+                ViewBag.IsStudent = false;
+                ViewBag.IsProf = false;
+                if (User.IsInRole("Student") || User.IsInRole("Professor") && userW != null)
                 {
                     Student studentLoggedIn = db.Students.Where(i => i.WNumber == userW).FirstOrDefault();
                     Professor profLoggedIn = db.Professors.Where(i => i.WNumber == userW).FirstOrDefault();
                     if (studentLoggedIn != null)
                     {
                         ViewBag.UserID = studentLoggedIn.ID;
+                        ViewBag.IsStudent = true;
                         if (User.IsInRole("Student") && (!User.IsInRole("Admin")) && (!User.IsInRole("Professor")))
                         {
                             return RedirectToAction("Details", "Students", new { id = studentLoggedIn.ID });
@@ -51,6 +54,11 @@ namespace CMPSAdvisingDB.Controllers
                     if (profLoggedIn != null)
                     {
                         ViewBag.UserID = profLoggedIn.ID;
+                        ViewBag.IsProf = true;
+                    }
+                    else
+                    {
+                        ViewBag.UserID = userID;
                     }
                 }
             }
