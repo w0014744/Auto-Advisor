@@ -294,14 +294,6 @@
     <Compile Include="ViewModels\AddCourseViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\CMPSAdvising1.mdf" />
-    <Content Include="App_Data\CMPSAdvising1_log.ldf">
-      <DependentUpon>CMPSAdvising1.mdf</DependentUpon>
-    </Content>
-    <Content Include="App_Data\roleAuthentication1.mdf" />
-    <Content Include="App_Data\roleAuthentication1_log.ldf">
-      <DependentUpon>roleAuthentication1.mdf</DependentUpon>
-    </Content>
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -344,6 +336,8 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Properties\PublishProfiles\cmpssite.pubxml" />
+    <None Include="Properties\PublishProfiles\HomeServer.pubxml" />
+    <None Include="Properties\PublishProfiles\HomeServer2.pubxml" />
     <None Include="Properties\PublishProfiles\OPENCS1.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -451,7 +445,9 @@
     <Content Include="Views\Professors\Index.cshtml" />
     <Content Include="Views\Professors\ListStudents.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
