@@ -450,6 +450,9 @@
     <Content Include="Views\Professors\Edit.cshtml" />
     <Content Include="Views\Professors\Index.cshtml" />
     <Content Include="Views\Professors\ListStudents.cshtml" />
+    <Content Include="Views\Professors\GenerateStudentList.cshtml" />
+    <Content Include="Views\Students\PDFDetails.cshtml" />
+    <Content Include="Views\Students\GenerateMasterList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

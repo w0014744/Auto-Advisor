@@ -12,7 +12,7 @@ using CMPSAdvisingDB.ViewModels;
 
 namespace CMPSAdvisingDB.Controllers
 {
-    [Authorize]
+    // [Authorize]
     public class StudentsController : Controller
     {
        
@@ -307,6 +307,46 @@ namespace CMPSAdvisingDB.Controllers
             db.Students.Remove(student);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        public ActionResult GeneratePDF(int? id)
+        {
+            return new Rotativa.ActionAsPdf("PDFDetails", new { id = id });
+        }
+
+        public ActionResult PDFDetails(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Student student = db.Students.Find(id);
+            if (student == null)
+            {
+                return HttpNotFound();
+            }
+            List<Course> mathCourses = student.CoursesTaken.Where(c => c.BaseCourse.Department == "MATH").ToList();
+            List<Course> cmpsCourses = student.CoursesTaken.Where(c => c.BaseCourse.Department == "CMPS").ToList();
+            List<Course> sciCourses = student.CoursesTaken.Where(c => (c.BaseCourse.Department == "PHYS" || c.BaseCourse.Department == "CHEM" || c.BaseCourse.Department == "GBIO")).ToList();
+            List<Course> englishCourses = student.CoursesTaken.Where(c => (c.BaseCourse.Department == "ENGL")).ToList();
+            ViewData["mathCourses"] = mathCourses;
+            ViewData["cmpsCourses"] = cmpsCourses;
+            ViewData["scienceCourses"] = sciCourses;
+            ViewData["englishCourses"] = englishCourses;
+
+            return View(student);
+
+        }
+
+        public ActionResult MasterList()
+        {
+            return new Rotativa.ActionAsPdf("GenerateMasterList");
+        }
+
+        public ActionResult GenerateMasterList()
+        {
+            var students = db.Students.Include(s => s.Concentration);
+            return View(students.ToList());
         }
 
         protected override void Dispose(bool disposing)

@@ -1,0 +1,62 @@
+﻿@model IEnumerable<CMPSAdvisingDB.Student>
+
+@{
+    Layout = "";
+}
+@Styles.Render("~/Content/css")
+
+<center>
+    <h2>@ViewBag.ProfName</h2>
+    My Students (To Be Advised)
+</center>
+<br />
+<br />
+<table class="table">
+<tr>
+    <th>
+        @Html.DisplayNameFor(model => model.FirstName)
+    </th>
+    <th>
+        @Html.DisplayNameFor(model => model.LastName)
+    </th>
+    <th>
+        @Html.DisplayNameFor(model => model.WNumber)
+    </th>
+    <th>
+        @Html.DisplayNameFor(model => model.HoursCompleted)
+    </th>
+    <th>
+        @Html.DisplayNameFor(model => model.GPA)
+    </th>
+    <th>
+        @Html.DisplayNameFor(model => model.Concentration.Name)
+    </th>
+    <th></th>
+</tr>
+
+@foreach (var item in Model)
+{
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.FirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LastName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.WNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HoursCompleted)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.GPA)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Concentration.Name)
+        </td>
+        
+    </tr>
+}
+
+</table>
