@@ -11,6 +11,7 @@ using PagedList;
 
 namespace CMPSAdvisingDB.Controllers
 {
+    [Authorize]
     public class BaseCoursesController : Controller
     {
         private CMPSAdvising1Entities db = new CMPSAdvising1Entities();
